@@ -1,18 +1,34 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div id="home">
+        <h1>Este é o Smart Condomínio</h1>
+    </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
-  }
+    name: 'Home',
+    data() {
+        let usuario = JSON.parse(localStorage.getItem('usuario'));
+
+        if (!usuario || !usuario.token) {
+            this.$emit("authenticated", false);
+            this.$router.replace({name: "login"});
+        } else {
+            this.$emit("authenticated", true);
+        }
+
+        return {
+            usuario: usuario
+        };
+    }
 }
 </script>
+
+<style scoped>
+    #home {
+        background-color: #FFFFFF;
+        border: 1px solid #CCCCCC;
+        padding: 20px;
+        margin-top: 10px;
+    }
+</style>
